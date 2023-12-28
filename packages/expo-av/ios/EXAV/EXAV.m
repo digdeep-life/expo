@@ -91,6 +91,7 @@ EX_EXPORT_MODULE(ExponentAV);
     _audioInterruptionMode = EXAudioInterruptionModeMixWithOthers;
     _playsInSilentMode = false;
     _allowsAudioRecording = false;
+    _defaultsToSpeaker = false;
     _staysActiveInBackground = false;
     
     _soundDictionaryKeyCount = 0;
@@ -258,6 +259,7 @@ EX_EXPORT_MODULE(ExponentAV);
   BOOL playsInSilentMode = ((NSNumber *)mode[@"playsInSilentModeIOS"]).boolValue;
   EXAudioInterruptionMode interruptionMode = ((NSNumber *)mode[@"interruptionModeIOS"]).intValue;
   BOOL allowsRecording = ((NSNumber *)mode[@"allowsRecordingIOS"]).boolValue;
+  BOOL defaultsToSpeaker = ((NSNumber *)mode[@"defaultsToSpeakerIOS"]).boolValue;
   BOOL shouldPlayInBackground = ((NSNumber *)mode[@"staysActiveInBackground"]).boolValue;
   
   if (!playsInSilentMode && interruptionMode == EXAudioInterruptionModeDuckOthers) {
@@ -276,6 +278,7 @@ EX_EXPORT_MODULE(ExponentAV);
     _playsInSilentMode = playsInSilentMode;
     _audioInterruptionMode = interruptionMode;
     _allowsAudioRecording = allowsRecording;
+    _defaultsToSpeaker = defaultsToSpeaker;
     _staysActiveInBackground = shouldPlayInBackground;
     
     if (_currentAudioSessionMode != EXAVAudioSessionModeInactive) {
@@ -321,6 +324,10 @@ EX_EXPORT_MODULE(ExponentAV);
   if (_allowsAudioRecording) {
     // Bluetooth input is only available when recording is allowed
     requiredAudioCategoryOptions = requiredAudioCategoryOptions | AVAudioSessionCategoryOptionAllowBluetooth;
+  }
+
+  if (_defaultsToSpeaker) {
+    requiredAudioCategoryOptions = requiredAudioCategoryOptions | AVAudioSessionCategoryOptionDefaultToSpeaker
   }
   
   return [_kernelAudioSessionManagerDelegate setCategory:requiredAudioCategory withOptions:requiredAudioCategoryOptions forModule:self];

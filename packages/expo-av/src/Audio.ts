@@ -20,6 +20,7 @@ const _populateMissingKeys = (
 
 const defaultMode: AudioMode = {
   allowsRecordingIOS: false,
+  defaultsToSpeakerIOS: false,
   interruptionModeIOS: InterruptionModeIOS.MixWithOthers,
   playsInSilentModeIOS: false,
   staysActiveInBackground: false,
@@ -53,13 +54,14 @@ export async function setAudioModeAsync(partialMode: Partial<AudioMode>): Promis
   }
   if (
     typeof mode.allowsRecordingIOS !== 'boolean' ||
+    typeof mode.defaultsToSpeakerIOS !== 'boolean' ||
     typeof mode.playsInSilentModeIOS !== 'boolean' ||
     typeof mode.staysActiveInBackground !== 'boolean' ||
     typeof mode.shouldDuckAndroid !== 'boolean' ||
     typeof mode.playThroughEarpieceAndroid !== 'boolean'
   ) {
     throw new Error(
-      '"allowsRecordingIOS", "playsInSilentModeIOS", "playThroughEarpieceAndroid", "staysActiveInBackground" and "shouldDuckAndroid" must be booleans.'
+      '"allowsRecordingIOS", "defaultsToSpeakerIOS", "playsInSilentModeIOS", "playThroughEarpieceAndroid", "staysActiveInBackground" and "shouldDuckAndroid" must be booleans.'
     );
   }
   currentAudioMode = mode;

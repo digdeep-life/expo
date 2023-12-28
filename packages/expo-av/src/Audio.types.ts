@@ -7,6 +7,12 @@ export type AudioMode = {
    */
   allowsRecordingIOS: boolean;
   /**
+   * A boolean selecting if the audio is routed to speaker on iOS.
+   * See the Apple docs [here](https://developer.apple.com/documentation/avfaudio/avaudiosessioncategoryoptions/avaudiosessioncategoryoptiondefaulttospeaker)
+   * @default true
+   */
+  defaultsToSpeakerIOS: boolean;
+  /**
    * An enum selecting how your experience's audio should interact with the audio from other apps on iOS.
    */
   interruptionModeIOS: InterruptionModeIOS;
